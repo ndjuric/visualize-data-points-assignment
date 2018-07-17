@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+    <title>Map</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #root {
+            height: inherit;
+            width: inherit;
+        }
+
+        .leaflet-container {
+            height: inherit;
+            width: inherit;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script src="{{ url_for('main.static', filename='bundle.js') }}"></script>
+</body>
+</html>

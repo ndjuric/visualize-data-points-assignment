@@ -1,0 +1,38 @@
+{
+  "name": "motionlogic-frontend",
+  "version": "0.0.1",
+  "description": "Frontend for visualizing opencellid data",
+  "scripts": {
+    "bundle": "NODE_ENV=production webpack --progress --colors",
+    "start": "node_modules/.bin/webpack-dev-server --inline --hot --progress --colors --host 0.0.0.0 --port 1990",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "leaflet": "^1.3.1",
+    "leaflet.markercluster": "^1.3.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-addons-shallow-compare": "^15.6.2",
+    "react-dom": "^16.4.1",
+    "react-leaflet": "^2.0.0",
+    "react-leaflet-control": "^1.4.1",
+    "react-leaflet-markercluster": "^2.0.0-rc3"
+  },
+  "devDependencies": {
+    "babel": "6.5.2",
+    "babel-core": "6.11.4",
+    "babel-loader": "6.2.4",
+    "babel-plugin-transform-class-properties": "6.10.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-react": "6.5.0",
+    "babel-preset-react-hmre": "1.1.1",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
+  },
+  "engines": {
+    "node": "6.9.0",
+    "npm": "3.10.8"
+  }
+}
