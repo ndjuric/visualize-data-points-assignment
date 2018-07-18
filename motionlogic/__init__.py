@@ -73,8 +73,6 @@ def init_flask_restful_routes(app):
 
     from motionlogic.api.swagger_docs_api import SwaggerDocsAPI
     from motionlogic.api.cell_tower_api import CellTowerAPI
-    from motionlogic.api.tile_png_api import TilePngAPI
 
     api.add_resource(CellTowerAPI, '/api/v1/cell_towers/<string:bounds>', endpoint="get cell towers", methods=['GET'])
-    api.add_resource(TilePngAPI, '/api/v1/get_png/<string:bounds>', endpoint="gen png", methods=['GET'])
     api.add_resource(SwaggerDocsAPI, '/api/docs')

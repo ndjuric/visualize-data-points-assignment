@@ -97,19 +97,12 @@ class OpenCellId(db.Model):
         return json.dumps(output)
 
     @staticmethod
-    def get_png(bounds):
-        bb = bounds.split(',')
-        if len(bb) is not 4:
-            return json.dumps([])
-
+    def get_geojson():
         sql = 'SELECT ST_AsGeoJSON(open_cell_id.coord) AS "ST_AsGeoJSON_1" FROM open_cell_id'
         result = db.engine.execute(sql)
-        counter = 0
         for r in result:
             for x in r:
-                print(counter)
-                counter += 1
-
+                yield x
 
     def save(self):
         db.session.add(self)

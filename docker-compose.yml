@@ -15,3 +15,10 @@ services:
     ports:
       - 5432:5432
     restart: unless-stopped
+  tileserver:
+    image: klokantech/tileserver-gl
+    ports:
+    - "8080:80"
+    volumes:
+    - ./data:/data
+    restart: always
