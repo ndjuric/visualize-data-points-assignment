@@ -1,4 +1,5 @@
 import os
+import subprocess
 from parser import OpenCellIdParser
 from flask_script import Manager
 from flask_migrate import MigrateCommand
@@ -46,6 +47,24 @@ def geojson(mccs=''):
     for file in files:
         if os.stat(file).st_size == 0:
             os.remove(file)
+
+
+@manager.command
+def mbtiles(mccs=''):
+    mcc_list = parse_mccs_param(mccs)
+
+    for mcc in mcc_list:
+        points_file = os.path.join(os.path.abspath('.'), 'data', mcc + '.json')
+        if not os.path.exists(points_file):
+            print('%s does not exist!' % points_file)
+            continue
+        print('do stuff with %s' % points_file)
+        # docker-compose run tippecanoe sh -c 'tippecanoe -o /data/out.mbtiles -zg --drop-densest-as-needed /data/602.json'
+        tippecanoe_base_command = 'tippecanoe -o /data/{0}.mbtiles -zg --drop-densest-as-needed /data/{0}.json'
+        tippecanoe_command = tippecanoe_base_command.format(mcc)
+        subprocess.call(["docker-compose", "run", "tippecanoe", "sh", "-c", tippecanoe_command])
+
+
 
 
 if __name__ == '__main__':
