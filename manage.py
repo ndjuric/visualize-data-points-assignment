@@ -1,5 +1,5 @@
 import os
-from parser import Reader
+from parser import OpenCellIdParser
 from flask_script import Manager
 from flask_migrate import MigrateCommand
 
@@ -27,8 +27,8 @@ def parse(mccs=''):
     mcc_list = parse_mccs(mccs)
 
     csv_file = os.path.join(os.path.abspath('.'), 'data', 'cell_towers.csv')
-    reader = Reader(csv_file, mcc_list)
-    reader.parse()
+    parser = OpenCellIdParser(csv_file, mcc_list)
+    parser.run()
 
 
 @manager.command

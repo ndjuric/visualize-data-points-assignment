@@ -3,14 +3,14 @@ import pandas as pd
 from backend.models.opencellid import OpenCellId
 
 
-class Reader:
+class OpenCellIdParser:
     def __init__(self, file_path, mcc_list=None):
         self.file_path = file_path
         self.mcc_list = mcc_list
         if self.mcc_list is None:
             self.mcc_list = []
 
-    def parse(self):
+    def run(self):
         print('Trying to parse %s' % self.file_path)
         try:
             csv_data = pd.read_csv(self.file_path)
@@ -34,5 +34,4 @@ class Reader:
                 print(e)
                 print('in line:', idx)
                 pass
-
         print('Done!')

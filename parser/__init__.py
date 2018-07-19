@@ -1,3 +1,3 @@
-from .populate import Reader
+from .open_cell_id_parser import OpenCellIdParser
 
-__all__ = ['Reader']
+__all__ = ['OpenCellIdParser']

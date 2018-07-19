@@ -5,7 +5,7 @@ module.exports = {
         './App.jsx'
     ],
     output: {
-        path: __dirname,
+        path: __dirname + '/../backend/web/static/js/',
         filename: "bundle.js"
     },
     module: {
