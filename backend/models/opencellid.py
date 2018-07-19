@@ -1,7 +1,7 @@
+import json
 from backend import db
 from geoalchemy2 import Geometry
 from geoalchemy2.functions import GenericFunction
-import json
 
 
 class ST_Point(GenericFunction):
@@ -55,13 +55,9 @@ class OpenCellId(db.Model):
             self.coord = ST_Point(self.lon, self.lat)
 
     @staticmethod
-    def get_cell_towers(bounds):
-        bb = bounds.split(',')
-        if len(bb) is not 4:
-            return json.dumps([])
-
+    def get_cell_towers(bbox):
         cell_towers = db.session.query(OpenCellId).filter(
-            OpenCellId.coord.intersects(ST_MakeEnvelope(*bb))
+            OpenCellId.coord.intersects(ST_MakeEnvelope(*bbox))
         ).limit(5000)
 
         output = []
