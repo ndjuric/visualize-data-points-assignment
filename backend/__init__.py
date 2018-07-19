@@ -3,19 +3,17 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Api
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from logging.handlers import RotatingFileHandler
 
 db = SQLAlchemy()
 migrate = Migrate()
 
-# Import all models so that they are registered with SQLAlchemy
 from backend.models import opencellid
 
 
 def create_app():
-    """ Bootstrap function to initialise the Flask app and config """
     app = Flask(__name__)
 
     app.config['CORS_HEADERS'] = 'Content-Type'
@@ -32,15 +30,15 @@ def create_app():
     app.register_blueprint(main_blueprint)
     app.register_blueprint(swagger_blueprint)
 
-    initialise_logger(app)
+    init_logger(app)
     app.logger.info('Starting...')
 
-    init_flask_restful_routes(app)
+    init_routes(app)
 
     return app
 
 
-def initialise_logger(app):
+def init_logger(app):
     log_dir = app.config['LOG_DIR']
     log_level = app.config['LOG_LEVEL']
 
@@ -57,7 +55,7 @@ def initialise_logger(app):
     app.logger.setLevel(log_level)
 
 
-def init_flask_restful_routes(app):
+def init_routes(app):
     app.logger.info('Initialising API Routes')
     api = Api(app)
     CORS(
