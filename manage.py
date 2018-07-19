@@ -11,7 +11,7 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 
-def parse_mccs(mccs):
+def parse_mccs_param(mccs):
     tmp_codes = []
     if mccs is not '':
         tmp_codes = mccs.split(',')
@@ -24,7 +24,7 @@ def parse_mccs(mccs):
 
 @manager.command
 def parse(mccs=''):
-    mcc_list = parse_mccs(mccs)
+    mcc_list = parse_mccs_param(mccs)
 
     csv_file = os.path.join(os.path.abspath('.'), 'data', 'cell_towers.csv')
     parser = OpenCellIdParser(csv_file, mcc_list)
@@ -33,7 +33,7 @@ def parse(mccs=''):
 
 @manager.command
 def geojson(mccs=''):
-    mcc_list = parse_mccs(mccs)
+    mcc_list = parse_mccs_param(mccs)
 
     files = []
     for mcc in mcc_list:

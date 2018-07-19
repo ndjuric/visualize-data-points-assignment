@@ -18,7 +18,11 @@ services:
   tileserver:
     image: klokantech/tileserver-gl
     ports:
-    - "8080:80"
+      - "8080:80"
     volumes:
-    - ./data:/data
+      - ./data:/data
     restart: always
+  tippecanoe:
+    image: tippecanoe
+    volumes:
+      - ./data:/data
