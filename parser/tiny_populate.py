@@ -3,7 +3,7 @@ import json
 from motionlogic.models.opencellid import OpenCellId
 
 
-class Reader:
+class Reader2:
     def __init__(self, file_path):
         self.file_path = file_path
 

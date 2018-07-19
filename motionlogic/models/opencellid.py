@@ -63,7 +63,7 @@ class OpenCellId(db.Model):
     created = db.Column(db.Integer, nullable=False)
     updated = db.Column(db.Integer, nullable=False)
 
-    coord = db.Column(Geometry('POINT'), nullable=True)  # Equivalent WGS 84
+    coord = db.Column(Geometry('POINT'), nullable=True)
 
     def __init__(self, val_dict):
         for key, value in val_dict.items():

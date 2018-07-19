@@ -1,3 +1,3 @@
-from .tiny_populate import Reader
+from .populate import Reader
 
 __all__ = ['Reader']

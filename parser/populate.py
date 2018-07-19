@@ -1,41 +1,38 @@
-# -*- coding: utf-8 -*-
-import os
 import json
 import pandas as pd
 from motionlogic.models.opencellid import OpenCellId
 
 
-def populate(csv_file, mcc_list):
-    print('Populating OpenCellId ..')
-    try:
-        csv_data = pd.read_csv(csv_file)
-    except Exception as e:
-        print('Error reading OpenCellId data')
-        print(e.message)
-        return
+class Reader:
+    def __init__(self, file_path, mcc_list=None):
+        self.file_path = file_path
+        self.mcc_list = mcc_list
+        if self.mcc_list is None:
+            self.mcc_list = []
 
-    good_data = csv_data[csv_data['mcc'].isin(mcc_list)]
-    good_data.reset_index(inplace=True, drop=True)
-
-    for idx, row in good_data.iterrows():
-        line = row.to_dict()
+    def parse(self):
+        print('Trying to parse %s' % self.file_path)
         try:
-            print(json.dumps(line))
-            # ocid = OpenCellId(line)
-            # ocid.save()
+            csv_data = pd.read_csv(self.file_path)
         except Exception as e:
-            print(e)
-            print('in line:', idx)
-            pass
+            print('Error reading %s: %s' % (self.file_path, e.message))
+            return
 
-    print('Done!')
+        if not self.mcc_list:
+            parse_data = csv_data
+        else:
+            parse_data = csv_data[csv_data['mcc'].isin(self.mcc_list)]
+            parse_data.reset_index(inplace=True, drop=True)
 
+        for idx, row in parse_data.iterrows():
+            line = row.to_dict()
+            try:
+                print(json.dumps(line))
+                open_cell_id = OpenCellId(line)
+                open_cell_id.save()
+            except Exception as e:
+                print(e)
+                print('in line:', idx)
+                pass
 
-def main():
-    csv_file = os.path.join(os.path.abspath('.'), 'data', 'cell_towers.csv')
-    required_mcc_list = [602, ]  # egypt should be 602?
-    populate(csv_file, required_mcc_list)
-
-
-if __name__ == '__main__':
-    main()
+        print('Done!')

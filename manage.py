@@ -11,11 +11,24 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 
+def parse_mccs(mccs):
+    tmp_codes = []
+    if mccs is not '':
+        tmp_codes = mccs.split(',')
+    mcc_list = [x for x in tmp_codes if x.isdigit()]
+    mcc_list = list(set(mcc_list))
+    if not mcc_list:
+        mcc_list.append('602')
+    return mcc_list
+
+
 @manager.command
-def loadstuff():
-    csv_file = os.path.join(os.path.abspath('.'), 'data', 'egypt.json')
-    reader = Reader(csv_file)
-    reader.process()
+def parse(mccs=''):
+    mcc_list = parse_mccs(mccs)
+
+    csv_file = os.path.join(os.path.abspath('.'), 'data', 'cell_towers.csv')
+    reader = Reader(csv_file, mcc_list)
+    reader.parse()
 
 
 @manager.command
