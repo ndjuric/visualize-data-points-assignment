@@ -16,27 +16,9 @@ class ST_MakeEnvelope(GenericFunction):
     type = Geometry
 
 
-class ST_AsPNG(GenericFunction):
-    """ Exposes PostGIS ST_AsPNG function """
-    name = 'ST_AsPNG'
-    type = Geometry
-
-
 class ST_AsGeoJSON(GenericFunction):
     """ Exposes PostGIS ST_AsGeoJSON function """
     name = 'ST_AsGeoJSON'
-    type = Geometry
-
-
-class ST_Transform(GenericFunction):
-    """ Exposes PostGIS ST_Transform function """
-    name = 'ST_Transform'
-    type = Geometry
-
-
-class ST_AsText(GenericFunction):
-    """ Exposes PostGIS ST_AsText function """
-    name = 'ST_AsText'
     type = Geometry
 
 
@@ -97,8 +79,11 @@ class OpenCellId(db.Model):
         return json.dumps(output)
 
     @staticmethod
-    def get_geojson():
-        sql = 'SELECT ST_AsGeoJSON(open_cell_id.coord) AS "ST_AsGeoJSON_1" FROM open_cell_id'
+    def get_geojson_points_for_mcc(mcc):
+        ''' I really wanted to use the ORM here but it kept wrapping my ST_ASGeoJSON to another
+            *AsWKT function for some reason... so raw query it is! :)
+        '''
+        sql = 'SELECT ST_AsGeoJSON(open_cell_id.coord) AS "ST_AsGeoJSON_1" FROM open_cell_id WHERE mcc=\'%s\'' % mcc
         result = db.engine.execute(sql)
         for r in result:
             for x in r:

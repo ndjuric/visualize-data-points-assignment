@@ -32,11 +32,20 @@ def parse(mccs=''):
 
 
 @manager.command
-def geojson():
-    points_file = os.path.join(os.path.abspath('.'), 'data', 'points.json')
-    with open(points_file, 'a') as points_fh:
-        for geom in OpenCellId.get_geojson():
-            points_fh.write(geom)
+def geojson(mccs=''):
+    mcc_list = parse_mccs(mccs)
+
+    files = []
+    for mcc in mcc_list:
+        points_file = os.path.join(os.path.abspath('.'), 'data', mcc + '.json')
+        files.append(points_file)
+        with open(points_file, 'a') as points_fh:
+            for geom in OpenCellId.get_geojson_points_for_mcc(mcc):
+                points_fh.write(geom)
+
+    for file in files:
+        if os.stat(file).st_size == 0:
+            os.remove(file)
 
 
 if __name__ == '__main__':
