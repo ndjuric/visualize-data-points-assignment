@@ -19,8 +19,6 @@ class CellTowerAPI(Resource):
               type: string
         responses:
             200:
-                description: GeoJson Feature Collection
-            500:
-                description: Internal Server Error
+                description: Cell tower coordinates or empty array
         """
         return CellTowerService.get_cell_towers(bounds)
