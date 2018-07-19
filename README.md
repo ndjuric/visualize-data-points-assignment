@@ -1,28 +1,61 @@
+## Setup
+Before doing anything, place a file cell_towers.csv into the ./data/
+folder.  This is the file downloaded from opencellid.org that contains
+all the cell tower locations.
+
+### Steps
+Unarchive
 ```bash
 ~ $ tar -xvzf motionlogic.tar.gz
 ~ $ cd motionlogic
 ~/motionlogic $
+```
+---
+
+Download tippecanoe and build its docker image. We'll need this later.
+```
 ~/motionlogic $ git clone https://github.com/mapbox/tippecanoe.git
 ~/motionlogic $ cd tippecanoe
 ~/motionlogic/tippecanoe $ docker build -t tippecanoe:latest .
 ~/motionlogic/tippecanoe $ cd ..
-~/motionlogic $ docker-compose up
+~/motionlogic $
+```
+---
 
+Bring up all the necessary servers (postgresql/postgis, tileserver-gl)
+```bash
+~/motionlogic $ docker-compose up
+```
+---
+
+Create a python virtual environment (tested with 3.5.2 and 3.6.5)
+```bash
 ~/motionlogic $ virtualenv -p python3 venv
 ~/motionlogic $ source venv/bin/activate
 ~/motionlogic $ pip install -r requirements.txt
+```
+---
 
+Create db structure
+```bash
 ~/motionlogic $ python manage.py db upgrade
-~/motionlogic $ python manage.py db migrate
-~/motionlogic $ python manage.py parse
-
-~/motionlogic $ python manage.py geojson
-~/motionlogic $ docker-compose run tippecanoe sh -c 'tippecanoe -o /data/out.mbtiles -zg --drop-densest-as-needed /data/602.json'
 ```
 
+---
+---
 
+## Commands
+Extract all data from cell_towers.csv with mcc 602 (egypt)
 ```bash
-$ docker-compose rm -fv
-$ docker volume ls -qf dangling=true | xargs -r docker volume rm
-$ docker-compose up
+~/motionlogic $ python manage.py parse
+```
+
+Select all files with mcc 602 and export them as geojson to ./data/602.json
+```bash
+~/motionlogic $ python manage.py geojson
+```
+
+Take a file ./data/602.json and convert it to ./data/602.mbtiles
+```
+~/motionlogic $ python manage.py mbtiles
 ```
