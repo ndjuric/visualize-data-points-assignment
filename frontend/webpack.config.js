@@ -18,18 +18,18 @@ module.exports = {
                 plugins: ['transform-class-properties', 'transform-object-rest-spread'],
                 env: {
                     development: {
-                        presets: ['react-hmre'],
-                    },
-                },
-            },
-        }],
+                        presets: ['react-hmre']
+                    }
+                }
+            }
+        }]
     },
     watchOptions: {
-        poll: 1000,
+        poll: 1000
     },
     devServer: {
         historyApiFallback: {
-            index: '/',
-        },
-    },
+            index: '/'
+        }
+    }
 };
