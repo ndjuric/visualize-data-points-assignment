@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from motionlogic.services.cell_tower_service import CellTowerService
+from backend.services.cell_tower_service import CellTowerService
 
 
 class CellTowerAPI(Resource):

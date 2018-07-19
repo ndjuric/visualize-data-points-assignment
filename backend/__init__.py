@@ -11,7 +11,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 # Import all models so that they are registered with SQLAlchemy
-from motionlogic.models import opencellid
+from backend.models import opencellid
 
 
 def create_app():
@@ -20,8 +20,8 @@ def create_app():
 
     app.config['CORS_HEADERS'] = 'Content-Type'
 
-    env = os.getenv('MOTIONLOGIC_ENV', 'Dev')
-    app.config.from_object('motionlogic.config.{0}Config'.format(env))
+    env = os.getenv('backend_ENV', 'Dev')
+    app.config.from_object('backend.config.{0}Config'.format(env))
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -47,7 +47,7 @@ def initialise_logger(app):
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
 
-    file_handler = RotatingFileHandler(log_dir + '/motionlogic.log', 'a', 2 * 1024 * 1024, 3)
+    file_handler = RotatingFileHandler(log_dir + '/backend.log', 'a', 2 * 1024 * 1024, 3)
     file_handler.setLevel(log_level)
     file_handler.setFormatter(
         logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
@@ -71,8 +71,8 @@ def init_flask_restful_routes(app):
         supports_credentials=True
     )
 
-    from motionlogic.api.swagger_docs_api import SwaggerDocsAPI
-    from motionlogic.api.cell_tower_api import CellTowerAPI
+    from backend.api.swagger_docs_api import SwaggerDocsAPI
+    from backend.api.cell_tower_api import CellTowerAPI
 
     api.add_resource(CellTowerAPI, '/api/v1/cell_towers/<string:bounds>', endpoint="get cell towers", methods=['GET'])
     api.add_resource(SwaggerDocsAPI, '/api/docs')

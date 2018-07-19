@@ -3,8 +3,8 @@ from parser import Reader
 from flask_script import Manager
 from flask_migrate import MigrateCommand
 
-from motionlogic import create_app
-from motionlogic.models.opencellid import OpenCellId
+from backend import create_app
+from backend.models.opencellid import OpenCellId
 
 app = create_app()
 manager = Manager(app)

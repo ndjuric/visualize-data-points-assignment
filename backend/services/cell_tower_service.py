@@ -1,4 +1,4 @@
-from motionlogic.models.opencellid import OpenCellId
+from backend.models.opencellid import OpenCellId
 
 
 class CellTowerService:

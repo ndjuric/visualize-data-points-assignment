@@ -1,4 +1,4 @@
-from motionlogic import db
+from backend import db
 from geoalchemy2 import Geometry
 from geoalchemy2.functions import GenericFunction
 import json

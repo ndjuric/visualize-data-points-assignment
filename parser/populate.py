@@ -1,6 +1,6 @@
 import json
 import pandas as pd
-from motionlogic.models.opencellid import OpenCellId
+from backend.models.opencellid import OpenCellId
 
 
 class Reader:
