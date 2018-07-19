@@ -2,3 +2,5 @@
 venv
 *.pyc
 logs
+tippecanoe
+data/cell_towers.csv
