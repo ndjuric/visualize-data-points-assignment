@@ -50,6 +50,11 @@ Extract all data from cell_towers.csv with mcc 602 (egypt)
 ~/motionlogic $ python manage.py parse
 ```
 
+Run server
+```bash
+~/motionlogic $ python manage.py runserver
+```
+---
 Select all files with mcc 602 and export them as geojson to ./data/602.json
 ```bash
 ~/motionlogic $ python manage.py geojson
@@ -59,3 +64,6 @@ Take a file ./data/602.json and convert it to ./data/602.mbtiles
 ```
 ~/motionlogic $ python manage.py mbtiles
 ```
+
+Commands also accept --mccs param
+python manage.py *command* --mccs 602,381
