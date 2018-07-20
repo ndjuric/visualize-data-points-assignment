@@ -55,6 +55,8 @@ Run server
 ~/motionlogic $ python manage.py runserver
 ```
 ---
+
+### Optional / do not affect the app
 Select all files with mcc 602 and export them as geojson to ./data/602.json
 ```bash
 ~/motionlogic $ python manage.py geojson
